@@ -18,6 +18,7 @@ class stack():
 		x = 0
 		v = 1
 		row = 7
+		previousX = 99
 		while self.gaming:
 
 			if not v == 0 and row >= 0:
@@ -29,10 +30,22 @@ class stack():
 				x = (x+v)%7
 			elif row >= 0:
 				sense.set_pixel(x,row, (0,0,255) )
-				v = 1
-				x += 1
-				row -= 1
-
+				if previousX == 99:
+					previousX = x
+				if previousX == x:
+					v = 1
+					x += 1
+					row -= 1
+					print 'Goal column:',x
+				else:
+					sense.show_message('You lose!', .05, text_colour = (255,255,0), back_colour = (0,0,255))
+					print 'Your column was',x
+					sense.clear()
+					exit()
+			if row == -1:
+				sense.show_message('You win!', .05, text_colour = (255,255,0), back_colour = (0,0,255))
+				sense.clear()
+				exit()
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					v = 0
