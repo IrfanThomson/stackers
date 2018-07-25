@@ -17,17 +17,21 @@ class stack():
 		pygame.time.set_timer(USEREVENT +1, 800)
 		x = 0
 		v = 1
+		row = 7
 		while self.gaming:
 
-			if not v == 0:
-				sense.set_pixel((x-v)%8,7, (0,0,0) )
-				sense.set_pixel(x,7, (0,0,255) )
+			if not v == 0 and row >= 0:
+				#sense.set_pixel((x-v)%8,row, (0,0,0) )
+				sense.set_pixel(x,row, (0,0,255) )
 				time.sleep(.05)
-				sense.set_pixel(x,7, (0,0,0) )
+				sense.set_pixel(x,row, (0,0,0) )
 				time.sleep(.05)
-				x = (x+v)%8
-			else:
-				sense.set_pixel(x,7, (0,0,255) )
+				x = (x+v)%7
+			elif row >= 0:
+				sense.set_pixel(x,row, (0,0,255) )
+				v = 1
+				x += 1
+				row -= 1
 
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
